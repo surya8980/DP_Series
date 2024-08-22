@@ -1,0 +1,41 @@
+Link: https://www.geeksforgeeks.org/problems/introduction-to-dp/1
+
+### Problem Description:
+Given a number `n`, the task is to compute the nth Fibonacci number modulo `10^9 + 7` using dynamic programming.
+
+### Approaches:
+- **Top-Down Approach (Memoization):** Recursively solve the problem while storing intermediate results to avoid recomputation.
+- **Bottom-Up Approach (Tabulation):** Iteratively solve the problem from the base case upwards, maintaining a table of results.
+
+class Solution {
+
+    static long topDown(int n) {
+        long[] dp = new long[n + 1];
+        Arrays.fill(dp, -1);
+        return helper(n, dp);
+    }
+
+    static long helper(int n, long[] dp) {
+        if (n < 2) {
+            return n;
+        }
+        if (dp[n] != -1) {
+            return dp[n];
+        }
+        dp[n] = (helper(n - 1, dp) + helper(n - 2, dp))%1000000007;
+        return dp[n];
+    }
+
+    static long bottomUp(int n) {
+        if (n < 2) {
+            return n;
+        }
+        long[] dp = new long[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2])%1000000007;
+        }
+        return dp[n];
+    }
+}
